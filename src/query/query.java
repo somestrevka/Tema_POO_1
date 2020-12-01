@@ -18,7 +18,12 @@ public class query {
         }
         if (inputData.getObjectType().compareTo("movies") == 0) {
             movie_class movie_spot = new movie_class();
-           // movie_spot.sortam_filme(this.input, inputData, arrayResult, fileWriter);
+            movie_spot.sortam_filme(this.input, inputData, arrayResult, fileWriter);
         }
+        if (inputData.getObjectType().compareTo("shows") == 0) {
+            movie_class movie_spot = new movie_class();
+            movie_spot.sortam_filme(this.input, inputData, arrayResult, fileWriter);
+        }
+
     }
 }
