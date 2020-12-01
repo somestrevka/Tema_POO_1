@@ -1,15 +1,42 @@
 package user;
 
-import Video.Videoclip;
+import video.Videoclip;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class user {
-    ArrayList<Videoclip> loved;
-    HashMap<String, Videoclip> watched;
+public class User {
 
-    public void view(Videoclip video) {
+    private ArrayList<Videoclip> loved;
+    private HashMap<String, Videoclip> watched;
+    /**
+    * getter-ul lui loved
+     */
+    public ArrayList<Videoclip> getLoved() {
+        return loved;
+    }
+    /**
+     * initializarea lui loved
+     */
+    public void makeLoved() {
+        this.loved = new ArrayList<>();
+    }
+    /**
+     * getter-ul lui watched
+     */
+    public HashMap<String, Videoclip> getWatched() {
+        return watched;
+    }
+    /**
+     * initializarea lui watched
+     */
+    public void makeWatched() {
+        this.watched = new HashMap<>();
+    }
+    /**
+     * marcam viedoclipul primit ca vazut
+     */
+    public void view(final Videoclip video) {
         if (watched.containsKey(video.title)) {
             watched.get(video.title).number_views++;
         } else {
@@ -17,14 +44,18 @@ public class user {
             watched.put(video.title, video);
         }
     }
-
-    public void favorite(Videoclip video) {
+    /**
+     * adaugarea unui videoclip la lista de favorite
+     */
+    public void favorite(final Videoclip video) {
         if (watched.containsKey(video.title)) {
             loved.add(video);
         }
     }
-
-    public void rating(Videoclip video) {
+    /**
+     * recenzie pentru video
+     */
+    public void rating(final Videoclip video) {
 
     }
 }

@@ -1,48 +1,49 @@
 package commands;
 
+import fileio.ActionInputData;
 import fileio.Input;
 import fileio.UserInputData;
-import checker.Checkstyle;
-import checker.Checker;
-import commands.command;
-import common.Constants;
-import fileio.*;
+import fileio.Writer;
 import org.json.simple.JSONArray;
-import user.user;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-public class rating {
-
-    public void voteaza (Input input, ActionInputData inputData, JSONArray arrayResult, Writer fileWriter) throws java.io.IOException{
-        for (UserInputData userData: input.getUsers()
-        ) {
+public class Rating {
+    /**
+    * metoda voteaza este folosita pentru ca utilizatorul sa poata da un
+     * rating unui video
+     */
+    public void voteaza(final Input input, final ActionInputData inputData,
+                        final JSONArray arrayResult, final Writer fileWriter)
+            throws java.io.IOException {
+        for (UserInputData userData : input.getUsers()
+        ) {  // cautam utilizatorl nostru
             if (userData.getUsername().compareTo(inputData.getUsername()) == 0) {
+                // vedem daca a vizionat videoul
                 if (userData.getHistory().containsKey(inputData.getTitle())) {
                     if (inputData.getSeasonNumber() == 0) {
+                        // cazul in care este vorba de un film
                         Float grade = (float) inputData.getGrade();
-                        if (userData.rated_movies == null) {
-                            userData.rated_movies = new HashMap();
+                        if (userData.getRatedMovies() == null) {
+                            userData.makeRatedMovies();
                         }
-                        userData.rate_movie(inputData.getTitle(), grade);
+                        userData.rateMovie(inputData.getTitle(), grade);
                     } else {
+                        // cazul in care este vorba de un serial
                         Float grade = (float) inputData.getGrade();
-                        if (userData.rated_shows == null) {
-                            userData.rated_shows = new HashMap();
+                        if (userData.getRatedShows() == null) {
+                            userData.makeRatedShows();
                         }
-                        userData.rate_show(inputData.getTitle(), grade, inputData.getSeasonNumber());
+                        userData.rateShow(inputData.getTitle(), grade);
                     }
-                    arrayResult.add(fileWriter.writeFile(inputData.getActionId(), "message", "success -> " + inputData.getTitle() + " was rated with " + inputData.getGrade() + " by " + inputData.getUsername()));
+                    // cazul in care videoclipul este vazut
+                    arrayResult.add(fileWriter.writeFile(inputData.getActionId(),
+                            "message", "success -> " + inputData.getTitle()
+                                    + " was rated with " + inputData.getGrade()
+                                    + " by " + inputData.getUsername()));
                 } else {
-                    arrayResult.add(fileWriter.writeFile(inputData.getActionId(), "message", "error -> " + inputData.getTitle() + " is not seen"));
+                    // cazul in care videoclipul inca nu a fost vizionat
+                    arrayResult.add(fileWriter.writeFile(inputData.getActionId(),
+                            "message", "error -> " + inputData.getTitle()
+                                    + " is not seen"));
                 }
             }
         }

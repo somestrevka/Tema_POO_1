@@ -2,19 +2,21 @@ package main;
 
 import checker.Checkstyle;
 import checker.Checker;
-import commands.command;
+import commands.Command;
 import common.Constants;
-import fileio.*;
+import fileio.ActionInputData;
+import fileio.Input;
+import fileio.InputLoader;
+import fileio.Writer;
 import org.json.simple.JSONArray;
-import query.query;
-import user.user;
+import query.Query;
+import recomandations.Recomandation;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -29,6 +31,7 @@ public final class Main {
 
     /**
      * Call the main checker and the coding style checker
+     *
      * @param args from command line
      * @throws IOException in case of exceptions to reading / writing
      */
@@ -74,32 +77,24 @@ public final class Main {
 
         //TODO add here the entry point to your implementation
 
-        for (ActionInputData inputData: input.getCommands()
-             ) {
+        for (ActionInputData inputData : input.getCommands()
+        ) {  // in functie de tipul actiunii, cream o instanta a unei clase
+            // specifice si apelam functia necesara
             if (inputData.getActionType().compareTo("recommendation") == 0) {
-                for (UserInputData userData: input.getUsers()
-                     ) {
-                    if (userData.getUsername().compareTo(inputData.getUsername()) == 0) {
-                        for (MovieInputData movieInput: input.getMovies()
-                             ) {
-                            if (!userData.getHistory().containsKey(movieInput.getTitle())) {
-                                arrayResult.add(fileWriter.writeFile(inputData.getActionId(), "message","StandardRecommendation result: " + movieInput.getTitle()));
-                                break;
-                            }
-                        }
-                    }
-                }
+                Recomandation recomandare = new Recomandation(input);
+                recomandare.recomandam(inputData, arrayResult, fileWriter);
             }
             if (inputData.getActionType().compareTo("command") == 0) {
-                command comanda = new command(input);
+                Command comanda = new Command(input);
                 comanda.rulare(inputData, arrayResult, fileWriter);
             }
             if (inputData.getActionType().compareTo("query") == 0) {
-                query query = new query(input);
-                query.vedem_ce(inputData, arrayResult, fileWriter);
+                Query query = new Query(input);
+                query.vedemCe(inputData, arrayResult, fileWriter);
             }
         }
 
         fileWriter.closeJSON(arrayResult);
     }
+
 }

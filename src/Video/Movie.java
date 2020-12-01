@@ -1,6 +1,6 @@
-package Video;
+package video;
 
 public class Movie extends Videoclip {
-    int length;
-    double rating;
+    private int length;
+    private double rating;
 }

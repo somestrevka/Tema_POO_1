@@ -1,4 +1,4 @@
-package Video;
+package video;
 
 import entertainment.Genre;
 

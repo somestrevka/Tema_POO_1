@@ -1,7 +1,7 @@
-package Video;
+package video;
 
 public class Serial extends Videoclip{
-    int number;
-    double season_length;
-    double rating;
+    private int number;
+    private double season_length;
+    private double rating;
 }

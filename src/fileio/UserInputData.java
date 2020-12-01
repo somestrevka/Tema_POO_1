@@ -1,7 +1,7 @@
 package fileio;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,19 +26,60 @@ public final class UserInputData {
      * Movies added to favorites
      */
     private final ArrayList<String> favoriteMovies;
+    /**
+    * filme recenziate
+     */
+    private Map<String, Float> ratedMovies;
+    /**
+    * getterul pentru ratedMovies
+     */
 
-    public Map<String, Float> rated_movies;
-    public Map<String, Float> rated_shows;
+    public Map<String, Float> getRatedMovies() {
+        return ratedMovies;
+    }
+    /**
+    * initializarea lui ratedMovies
+     */
 
-    public void rate_movie(String name, Float grade) {
-        this.rated_movies.put(name, grade);
+    public void makeRatedMovies() {
+        this.ratedMovies = new HashMap<>();
+    }
+    /**
+    * initializarea lui ratedShows
+     */
+
+    public void makeRatedShows() {
+        this.ratedShows = new HashMap<>();
+    }
+    /**
+    * initializarea lui ratedShows
+     */
+
+    public Map<String, Float> getRatedShows() {
+        return ratedShows;
     }
 
-    public void rate_show(String name, Float grade, int season_number) {
-        this.rated_shows.replace(name, grade);
+    /**
+    * seriale recenziate
+     */
+    private Map<String, Float> ratedShows;
+    /**
+    * functie pentru recenzia filmelor
+     */
+    public void rateMovie(final String name, final Float grade) {
+        this.ratedMovies.put(name, grade);
     }
-
-    public void adauga_fav(String name) {
+    /**
+    * functie pentru recenzia serialelor
+     */
+    public void rateShow(final String name, final Float grade) {
+        this.ratedShows.replace(name, grade);
+    }
+    /**
+    * functie care adauga un video la lista de favorite
+     * a unui utilizator
+     */
+    public void adaugaFav(final String name) {
         this.favoriteMovies.add(name);
     }
 

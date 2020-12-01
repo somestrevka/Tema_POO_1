@@ -5,24 +5,30 @@ import fileio.Input;
 import fileio.Writer;
 import org.json.simple.JSONArray;
 
-public class query {
-    Input input;
-    public query (Input input) {
+public class Query {
+    /**
+    * aici stabilim ce query apelam
+     */
+    private Input input;
+    public Query(final Input input) {
         this.input = input;
     }
-
-    public void vedem_ce(ActionInputData inputData, JSONArray arrayResult, Writer fileWriter) throws java.io.IOException{
+    /**
+    * gasim cu ce tip de query ne confruntam
+     */
+    public void vedemCe(final ActionInputData inputData, final JSONArray arrayResult,
+                         final Writer fileWriter) throws java.io.IOException {
         if (inputData.getObjectType().compareTo("actors") == 0) {
-            actors_class actors_place = new actors_class();
-            actors_place.sortam_actori(this.input, inputData, arrayResult, fileWriter);
+            ActorsClass actorsPlace = new ActorsClass();
+            actorsPlace.sortamActori(this.input, inputData, arrayResult, fileWriter);
         }
         if (inputData.getObjectType().compareTo("movies") == 0) {
-            movie_class movie_spot = new movie_class();
-            movie_spot.sortam_filme(this.input, inputData, arrayResult, fileWriter);
+            MovieClass movieSpot = new MovieClass();
+            movieSpot.sortamFilme(this.input, inputData, arrayResult, fileWriter);
         }
         if (inputData.getObjectType().compareTo("shows") == 0) {
-            movie_class movie_spot = new movie_class();
-            movie_spot.sortam_filme(this.input, inputData, arrayResult, fileWriter);
+            Shows serialSpot = new Shows();
+            serialSpot.sortamSeriale(this.input, inputData, arrayResult, fileWriter);
         }
 
     }
